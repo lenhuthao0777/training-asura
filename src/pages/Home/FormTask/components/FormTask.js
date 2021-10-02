@@ -1,18 +1,15 @@
 import Edit from "common/Edit";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../assets/style.scss";
-function FormTask({ taskDetailData }) {
+function FormTask({ taskDetailData, setTaskDetailData }) {
     const [edit, setEdit] = useState(true);
-    const [value, setValue] = useState({});
-    useEffect(() => {
-        setValue(taskDetailData);
-    }, [taskDetailData]);
+    // const [value, setValue] = useState({});
 
     // Handle change input
     const onChangeInput = (e) => {
-        const newData = { ...value };
+        const newData = { ...taskDetailData };
         newData[e.target.name] = e.target.value;
-        setValue(newData);
+        setTaskDetailData(newData);
     };
     // Array input
     const input = [
@@ -22,7 +19,7 @@ function FormTask({ taskDetailData }) {
             name: "id",
             type: "number",
             disable: "true",
-            value: value.id || "",
+            value: taskDetailData.id || "",
         },
         {
             id: 2,
@@ -30,7 +27,7 @@ function FormTask({ taskDetailData }) {
             name: "taskName",
             type: "text",
             disable: "false",
-            value: value.taskName || "",
+            value: taskDetailData.taskName || "",
         },
         {
             id: 3,
@@ -38,7 +35,7 @@ function FormTask({ taskDetailData }) {
             name: "time",
             type: "time",
             disable: "false",
-            value: value.time || "",
+            value: taskDetailData.time || "",
         },
         {
             id: 4,
@@ -46,7 +43,7 @@ function FormTask({ taskDetailData }) {
             name: "name",
             type: "text",
             disable: "false",
-            value: value.name || "",
+            value: taskDetailData.name || "",
         },
         {
             id: 5,
@@ -54,7 +51,7 @@ function FormTask({ taskDetailData }) {
             name: "dateOfBirth",
             type: "date",
             disable: "false",
-            value: value.dateOfBirth || "",
+            value: taskDetailData.dateOfBirth || "",
         },
         {
             id: 6,
@@ -62,7 +59,7 @@ function FormTask({ taskDetailData }) {
             name: "address",
             type: "text",
             disable: "false",
-            value: value.address || "",
+            value: taskDetailData.address || "",
         },
         {
             id: 7,
@@ -70,7 +67,7 @@ function FormTask({ taskDetailData }) {
             name: "phone",
             type: "text",
             disable: "false",
-            value: value.phone || "",
+            value: taskDetailData.phone || "",
         },
         {
             id: 8,
@@ -78,7 +75,7 @@ function FormTask({ taskDetailData }) {
             name: "email",
             type: "email",
             disable: "false",
-            value: value.email || "",
+            value: taskDetailData.email || "",
         },
         {
             id: 9,
@@ -86,7 +83,7 @@ function FormTask({ taskDetailData }) {
             name: "currentJob",
             type: "text",
             disable: "false",
-            value: value.currentJob || "",
+            value: taskDetailData.currentJob || "",
         },
         {
             id: 10,
@@ -94,7 +91,7 @@ function FormTask({ taskDetailData }) {
             name: "experience",
             type: "text",
             disable: "false",
-            value: value.experience || "",
+            value: taskDetailData.experience || "",
         },
         {
             id: 11,
@@ -102,11 +99,11 @@ function FormTask({ taskDetailData }) {
             name: "note",
             type: "text",
             disable: "false",
-            value: value.note || "",
+            value: taskDetailData.note || "",
         },
     ];
     return (
-        <div style={{ width: "30%" }}>
+        <div style={{ width: "30%", marginBottom: "100px" }}>
             <h2 style={{ textAlign: "center" }}>{edit ? "Detail" : "Edit"}</h2>
             <button
                 type="button"
@@ -150,7 +147,7 @@ function FormTask({ taskDetailData }) {
 
                 {edit ? null : (
                     <>
-                        <Edit data={value} edit={edit} setEdit={setEdit} />
+                        <Edit data={taskDetailData} edit={edit} setEdit={setEdit} />
                         <button
                             type="button"
                             className="btn btn-danger"

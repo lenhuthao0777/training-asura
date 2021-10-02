@@ -20,7 +20,7 @@ function FormContainer() {
     useEffect(() => {
         setTaskDetailData(taskDetail);
     }, [taskDetail]);
-    return <FormTask taskDetailData={taskDetailData} />;
+    return <FormTask taskDetailData={taskDetailData} setTaskDetailData={setTaskDetailData}/>;
 }
 
 export default FormContainer;

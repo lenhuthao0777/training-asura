@@ -6,10 +6,12 @@ import API from "services/Client";
 import TaskList from "../components/TaskList";
 function TaskListContainer() {
     const { taskData } = useSelector((state) => state.TaskReducer);
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     const fetchData = () => {
+        setIsLoading(true);
         API.getAllData((data) => {
-          // Format data
+            // Format data
             const newData = data.map((item) => ({
                 id: item.id,
                 taskName: item.taskName,
@@ -24,7 +26,7 @@ function TaskListContainer() {
                 currentJob: item.currentJob,
                 experience: item.experience,
                 note: item.note,
-                // key: item.id,
+                key: item.id,
             }));
             dispatch({
                 type: GET_DATA,
@@ -32,12 +34,14 @@ function TaskListContainer() {
                     data: newData,
                 },
             });
+        }).finally(() => {
+            setIsLoading(false);
         });
     };
     useEffect(() => {
         fetchData();
     }, []);
-    return <TaskList taskData={taskData} type={DETAIL} />;
+    return <TaskList taskData={taskData} type={DETAIL} isLoading={isLoading} />;
 }
 
 export default TaskListContainer;
