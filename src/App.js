@@ -1,23 +1,23 @@
 import AppLayout from "layouts/AppLayout";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-const Home = lazy(() => import("pages/Home"));
+const FormTask = lazy(() => import("pages/Home/FormTask"));
 function App() {
     return (
         <Suspense fallback={<div>Loading.....</div>}>
-          <BrowserRouter>
-            <Switch>
-                <Route path="/">
-                    <AppLayout>
-                        <Switch>
-                            <Route path="/" exact>
-                                <Home />
-                            </Route>
-                        </Switch>
-                    </AppLayout>
-                </Route>
-            </Switch>
-        </BrowserRouter>
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/">
+                        <AppLayout>
+                            <Switch>
+                                <Route path="/form-task/:id">
+                                    <FormTask />
+                                </Route>
+                            </Switch>
+                        </AppLayout>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
         </Suspense>
     );
 }

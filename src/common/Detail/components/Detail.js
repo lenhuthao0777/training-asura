@@ -1,6 +1,17 @@
+import { Button } from "antd";
 import React from "react";
-function Detail({ onHandleDetail }) {
-    return <button className="btn btn-warning" onClick={onHandleDetail}>Detail</button>;
+import { Link } from "react-router-dom";
+
+function Detail({ onHandleDetail, id }) {
+    return (
+        <Link to={`/form-task/${id}`}>
+            <Button type="primary" size="large" onClick={onHandleDetail}>
+                Detail
+            </Button>
+        </Link>
+    );
 }
 
 export default Detail;
+
+

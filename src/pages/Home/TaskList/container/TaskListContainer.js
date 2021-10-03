@@ -1,18 +1,15 @@
-import { DETAIL, GET_DATA } from "constants/index";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import API from "services/Client";
 import TaskList from "../components/TaskList";
 function TaskListContainer() {
-    const { taskData } = useSelector((state) => state.TaskReducer);
     const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
+    const [taskData, setTaskData] = useState([]);
     const fetchData = () => {
         setIsLoading(true);
         API.getAllData((data) => {
             // Format data
-            const newData = data.map((item) => ({
+            const newTaskData = data.map((item) => ({
                 id: item.id,
                 taskName: item.taskName,
                 time: item.time,
@@ -28,12 +25,7 @@ function TaskListContainer() {
                 note: item.note,
                 key: item.id,
             }));
-            dispatch({
-                type: GET_DATA,
-                payload: {
-                    data: newData,
-                },
-            });
+            setTaskData(newTaskData);
         }).finally(() => {
             setIsLoading(false);
         });
@@ -41,7 +33,7 @@ function TaskListContainer() {
     useEffect(() => {
         fetchData();
     }, []);
-    return <TaskList taskData={taskData} type={DETAIL} isLoading={isLoading} />;
+    return <TaskList taskData={taskData}  isLoading={isLoading} />;
 }
 
 export default TaskListContainer;

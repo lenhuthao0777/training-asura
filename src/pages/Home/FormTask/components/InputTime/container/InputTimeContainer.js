@@ -1,11 +1,11 @@
 import React from "react";
-import Input from "../components/Input";
 import PropTypes from "prop-types";
-function inputContainer({ value, name, disabled, onChange, label }) {
+import InputTime from "../components/InputTime";
+function InputTimeContainer({ name, value, disabled, onChange, label }) {
     return (
-        <Input
-            value={value}
+        <InputTime
             name={name}
+            value={value}
             disabled={disabled}
             onChange={onChange}
             label={label}
@@ -13,9 +13,9 @@ function inputContainer({ value, name, disabled, onChange, label }) {
     );
 }
 
-export default inputContainer;
+export default InputTimeContainer;
 
-inputContainer.propTypes = {
+InputTimeContainer.propTypes = {
     value: PropTypes.string,
     name: PropTypes.string,
     disabled: PropTypes.bool,

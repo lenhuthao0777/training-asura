@@ -1,16 +1,20 @@
+import { Button } from "antd";
 import Edit from "common/Edit";
 import React, { useState } from "react";
 import "../assets/style.scss";
-function FormTask({ taskDetailData, setTaskDetailData }) {
+import Input from "./Input";
+import InputDate from "./InputDate";
+import InputTime from "./InputTime";
+function FormTask({ taskDetailData, setTaskDetailData, onChangeInput }) {
     const [edit, setEdit] = useState(true);
-    // const [value, setValue] = useState({});
 
     // Handle change input
-    const onChangeInput = (e) => {
-        const newData = { ...taskDetailData };
-        newData[e.target.name] = e.target.value;
-        setTaskDetailData(newData);
-    };
+    // const onChangeInput = (e) => {
+    //     const newData = { ...taskDetailData };
+    //     newData[e.target.name] = e.target.value;
+    //     setTaskDetailData(newData);
+    // };
+
     // Array input
     const input = [
         {
@@ -18,7 +22,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Id",
             name: "id",
             type: "number",
-            disable: "true",
             value: taskDetailData.id || "",
         },
         {
@@ -26,7 +29,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Task Name",
             name: "taskName",
             type: "text",
-            disable: "false",
             value: taskDetailData.taskName || "",
         },
         {
@@ -34,7 +36,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Time",
             name: "time",
             type: "time",
-            disable: "false",
             value: taskDetailData.time || "",
         },
         {
@@ -42,7 +43,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Name",
             name: "name",
             type: "text",
-            disable: "false",
             value: taskDetailData.name || "",
         },
         {
@@ -50,7 +50,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Date Of Birth",
             name: "dateOfBirth",
             type: "date",
-            disable: "false",
             value: taskDetailData.dateOfBirth || "",
         },
         {
@@ -58,7 +57,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Address",
             name: "address",
             type: "text",
-            disable: "false",
             value: taskDetailData.address || "",
         },
         {
@@ -66,7 +64,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Phone",
             name: "phone",
             type: "text",
-            disable: "false",
             value: taskDetailData.phone || "",
         },
         {
@@ -74,7 +71,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Email",
             name: "email",
             type: "email",
-            disable: "false",
             value: taskDetailData.email || "",
         },
         {
@@ -82,7 +78,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Current Job",
             name: "currentJob",
             type: "text",
-            disable: "false",
             value: taskDetailData.currentJob || "",
         },
         {
@@ -90,7 +85,6 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Experience",
             name: "experience",
             type: "text",
-            disable: "false",
             value: taskDetailData.experience || "",
         },
         {
@@ -98,64 +92,77 @@ function FormTask({ taskDetailData, setTaskDetailData }) {
             label: "Note",
             name: "note",
             type: "text",
-            disable: "false",
             value: taskDetailData.note || "",
         },
     ];
+    const renderInput = () => {
+        return input.map((item) => {
+            if (item.type === "text") {
+                return (
+                    <Input
+                        name={item.name}
+                        value={item.value}
+                        label={item.label}
+                        key={item.id}
+                        onChange={onChangeInput}
+                        disabled={edit}
+                    />
+                );
+            } else if (item.type === "date") {
+                return (
+                    <InputDate
+                        name={item.name}
+                        value={item.value}
+                        label={item.label}
+                        key={item.id}
+                        onChange={onChangeInput}
+                        disabled={edit}
+                    />
+                );
+            } else if (item.type === "time") {
+                return (
+                    <InputTime
+                        name={item.name}
+                        value={item.value}
+                        label={item.label}
+                        key={item.id}
+                        onChange={onChangeInput}
+                        disabled={edit}
+                    />
+                );
+            }
+        });
+    };
     return (
-        <div style={{ width: "30%", marginBottom: "100px" }}>
+        <div
+            style={{ width: "30%", marginBottom: "100px", marginRight: "20px" }}
+        >
             <h2 style={{ textAlign: "center" }}>{edit ? "Detail" : "Edit"}</h2>
-            <button
-                type="button"
-                className="btn btn-primary"
+            <Button
+                type="primary"
+                size="large"
                 onClick={() => setEdit(false)}
                 style={{ margin: "20px 0" }}
             >
                 Edit
-            </button>
+            </Button>
             <form>
-                {input.map((input) => {
-                    if (edit === true) {
-                        return (
-                            <div className="form-group" key={input.id}>
-                                <label htmlFor="exampleInputEmail1">{input.label}:</label>
-                                <input
-                                    type={input.type}
-                                    value={input.value}
-                                    name={input.name}
-                                    disabled
-                                    onChange={onChangeInput}
-                                    className="form-control"
-                                />
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div className="form-group" key={input.id}>
-                                <label htmlFor="exampleInputEmail1">{input.label}:</label>
-                                <input
-                                    type={input.type}
-                                    value={input.value}
-                                    name={input.name}
-                                    onChange={onChangeInput}
-                                    className="form-control"
-                                />
-                            </div>
-                        );
-                    }
-                })}
-
+                {renderInput()}
                 {edit ? null : (
                     <>
-                        <Edit data={taskDetailData} edit={edit} setEdit={setEdit} />
-                        <button
-                            type="button"
-                            className="btn btn-danger"
+                        <Edit
+                            data={taskDetailData}
+                            edit={edit}
+                            setEdit={setEdit}
+                        />
+                        <Button
+                            type="primary"
                             style={{ marginTop: "20px", marginLeft: "15px" }}
                             onClick={() => setEdit(!edit)}
+                            size="large"
                         >
                             Cancel
-                        </button>
+                        </Button>
                     </>
                 )}
             </form>

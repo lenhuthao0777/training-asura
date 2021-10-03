@@ -24,6 +24,16 @@ const API = {
                 console.log(error);
             });
     },
+    getDataById: async (id) => {
+        await fetch(`${BASE_URL}/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },
 };
 
 export default API;

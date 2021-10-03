@@ -1,24 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
 import Detail from "../components/Detail";
+import PropTypes from "prop-types";
 
-function DetailContainer({ handleDetail, task, type }) {
-    // const dispatch = useDispatch();
-    // const handleDetail = () => {
-    //     dispatch({
-    //         type: type,
-    //         payload: { task },
-    //     });
-    // };
-
-    return <Detail onHandleDetail={() => handleDetail(task, type)} />;
+function DetailContainer({ id }) {
+    return <Detail id={id} />;
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        handleDetail: (task, type) => {
-            dispatch({ type: type, payload: { task } });
-        },
-    };
+export default DetailContainer;
+Detail.propTypes = {
+    id: PropTypes.string,
+    onHandleDetail: PropTypes.func,
 };
-export default connect(null, mapDispatchToProps)(DetailContainer);
