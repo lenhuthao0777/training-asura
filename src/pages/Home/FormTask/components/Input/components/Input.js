@@ -1,17 +1,10 @@
+import { Form, Input } from "antd";
 import React from "react";
-import { Input } from "antd";
-function InputText({ name, value, disabled, onChange, label }) {
+function InputText({ name, disabled, label }) {
     return (
-        <div className="input__group" style={{marginBottom: "10px"}}>
-            {label ? <label htmlFor="">{label}:</label> : null}
-            <Input
-                disabled={disabled}
-                name={name}
-                value={value}
-                onChange={onChange}
-                // placeholder="Basic usage"
-            />
-        </div>
+        <Form.Item name={name} label={label}>
+            <Input disabled={disabled} />
+        </Form.Item>
     );
 }
 

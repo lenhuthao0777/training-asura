@@ -24,12 +24,10 @@ const API = {
                 console.log(error);
             });
     },
-    getDataById: async (id) => {
+    getDataById: async (id,callback) => {
         await fetch(`${BASE_URL}/${id}`)
             .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            })
+            .then(callback)
             .catch((error) => {
                 console.log(error);
             });

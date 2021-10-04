@@ -1,11 +1,13 @@
-import { Button } from "antd";
+import { Button, Form } from "antd";
 import React from "react";
 
-function Edit({ onHandelEdit }) {
+function Edit() {
     return (
-        <Button style={{ marginTop: "20px" }} size="large" type="primary" onClick={onHandelEdit}>
-            Save Edit
-        </Button>
+        <Form.Item>
+            <Button style={{ marginRight: "20px" }} size="large" type="primary">
+                Save Edit
+            </Button>
+        </Form.Item>
     );
 }
 
