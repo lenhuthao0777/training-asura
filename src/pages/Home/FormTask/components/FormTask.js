@@ -1,7 +1,6 @@
 import { Button, Form } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import API from "services/Client";
 import "../assets/style.scss";
 import Input from "./Input";
 import InputDate from "./InputDate";
@@ -128,8 +127,7 @@ const CustomizedForm = ({ onChange, fields, edit, onFinish }) => (
     </Form>
 );
 
-function FormTask({ data }) {
-    const [edit, setEdit] = useState(true);
+function FormTask({ data, edit, setEdit, onChange }) {
     const [fields, setFields] = useState([]);
 
     const setValueFields = (values) => {
@@ -186,18 +184,6 @@ function FormTask({ data }) {
         // setDetailTask(data);
         setValueFields(data);
     }, [data]);
-
-    // Handle change input----------------------------------
-    const onFinish = (values) => {
-        console.log(values);
-        setEdit(true);
-        const newValues = {
-            ...values,
-            time: values.time._d,
-            dateOfBirth: values.dateOfBirth._d,
-        };
-        API.editData(newValues, values.id);
-    };
     return (
         <div style={{ width: "30%", display: "flex", flexDirection: "column" }}>
             <h1 style={{ textAlign: "center" }}>{edit ? "DETAIL" : "EDIT"}</h1>
@@ -216,7 +202,7 @@ function FormTask({ data }) {
                     setFields(newFields);
                 }}
                 edit={edit}
-                onFinish={onFinish}
+                onFinish={onChange}
             />
         </div>
     );
