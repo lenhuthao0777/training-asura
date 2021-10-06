@@ -1,7 +1,9 @@
-import { Button, Form } from "antd";
+import { Button, Form, Row } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import API from "services/Client";
 import "../assets/style.scss";
+import AddInput from "./AddInput";
 import Input from "./Input";
 import InputDate from "./InputDate";
 import InputTime from "./InputTime";
@@ -74,9 +76,27 @@ const input = [
         name: "note",
         type: "text",
     },
+    {
+        id: 12,
+        label: "Id Card",
+        name: "idCard",
+        type: "text",
+    },
+    {
+        id: 13,
+        label: "Work Start Time",
+        name: "workStartTime",
+        type: "time",
+    },
+    {
+        id: 14,
+        label: "Work Finish Time",
+        name: "workFinishTime",
+        type: "time",
+    },
 ];
 // Render form--------------------------------------
-const CustomizedForm = ({ onChange, fields, edit, onFinish }) => (
+const CustomizedForm = ({ onChange, fields, edit, onFinish, setEdit }) => (
     <Form
         name="global_state"
         layout="vertical"
@@ -86,6 +106,24 @@ const CustomizedForm = ({ onChange, fields, edit, onFinish }) => (
             onChange(allFields);
         }}
     >
+        <Row>
+            {edit ? null : (
+                <Form.Item style={{ marginRight: "20px" }}>
+                    <Button type="primary" size="large" htmlType="submit">
+                        Save Edit
+                    </Button>
+                </Form.Item>
+            )}
+            <Form.Item>
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => setEdit(!edit)}
+                >
+                    {edit ? "EDIT" : "CANCEL"}
+                </Button>
+            </Form.Item>
+        </Row>
         {input.map((item) => {
             if (item.type === "text") {
                 return (
@@ -116,18 +154,10 @@ const CustomizedForm = ({ onChange, fields, edit, onFinish }) => (
                 );
             }
         })}
-
-        {edit ? null : (
-            <Form.Item>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </Form.Item>
-        )}
     </Form>
 );
 
-function FormTask({ data, edit, setEdit, onChange }) {
+function FormTask({ data, edit, setEdit }) {
     const [fields, setFields] = useState([]);
 
     const setValueFields = (values) => {
@@ -170,40 +200,54 @@ function FormTask({ data, edit, setEdit, onChange }) {
             },
             {
                 name: ["dateOfBirth"],
-                value: moment(values.dateOfBirth, "DD-MM-YYYY"),
+                value: moment(values.dateOfBirth, "YYYY-MM-DD"),
             },
             {
                 name: ["email"],
                 value: values.email,
+            },
+            {
+                name: ["idCard"],
+                value: values.idCard,
+            },
+            {
+                name: ["workStartTime"],
+                value: moment(values.workStartTime, "HH:mm:ss"),
+            },
+            {
+                name: ["workFinishTime"],
+                value: moment(values.workFinishTime, "HH:mm:ss"),
             },
         ]);
     };
 
     // -------------------------------------
     useEffect(() => {
-        // setDetailTask(data);
         setValueFields(data);
     }, [data]);
+    // Handle change input----------------------------------
+    const onFinish = (values) => {
+        setEdit(true);
+        const newValues = {
+            time: values.time._d,
+            dateOfBirth: values.dateOfBirth._d,
+            ...values,
+        };
+        API.editData(newValues, values.id);
+    };
     return (
         <div style={{ width: "30%", display: "flex", flexDirection: "column" }}>
             <h1 style={{ textAlign: "center" }}>{edit ? "DETAIL" : "EDIT"}</h1>
-            <Form.Item>
-                <Button
-                    type="primary"
-                    size="large"
-                    onClick={() => setEdit(!edit)}
-                >
-                    {edit ? "EDIT" : "CANCEL"}
-                </Button>
-            </Form.Item>
             <CustomizedForm
                 fields={fields}
                 onChange={(newFields) => {
                     setFields(newFields);
                 }}
                 edit={edit}
-                onFinish={onChange}
+                onFinish={onFinish}
+                setEdit={setEdit}
             />
+            <AddInput edit={edit} />
         </div>
     );
 }

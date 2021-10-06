@@ -15,8 +15,8 @@ function TaskListContainer() {
                 // time: item.time,
                 time: moment(item.time).format("HH:mm:ss"),
                 name: item.name,
-                dateOfBirth: item.dateOfBirth,
-                // dateOfBirth: moment(item.dateOfBirth).format("YYYY-MM-DD"),
+                // dateOfBirth: item.dateOfBirth,
+                dateOfBirth: moment(item.dateOfBirth).format("YYYY-MM-DD"),
                 address: item.address,
                 phone: item.phone,
                 email: item.email,
@@ -24,6 +24,9 @@ function TaskListContainer() {
                 experience: item.experience,
                 note: item.note,
                 key: item.id,
+                idCard: item.idCard,
+                workStartTime: moment(item.workStartTime).format("HH:mm:ss"),
+                workFinishTime: moment(item.workFinishTime).format("HH:mm:ss"),
             }));
             setTaskData(newTaskData);
         }).finally(() => {

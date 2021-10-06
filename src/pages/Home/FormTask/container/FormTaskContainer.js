@@ -19,19 +19,7 @@ function FormContainer() {
         getTaskById();
     }, [id]);
 
-    // Handle change input----------------------------------
-    const onFinish = (values) => {
-        console.log(values);
-        setEdit(true);
-        const newValues = {
-            ...values,
-            time: values.time._d,
-            dateOfBirth: values.dateOfBirth._d,
-        };
-        API.editData(newValues, values.id);
-    };
-
-    return <FormTask onChange={onFinish} data={taskDetailData} edit={edit} setEdit={setEdit} />;
+    return <FormTask data={taskDetailData} edit={edit} setEdit={setEdit} />;
 }
 
 export default FormContainer;
