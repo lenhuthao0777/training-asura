@@ -4,16 +4,19 @@ import Input from "../../Input/index";
 import InputTime from "../../InputTime";
 import InputDate from "../../InputDate";
 import { Button, Row } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { v4 as uuid } from "uuid";
 function AddInputContainer(edit) {
     const [open, setOpen] = useState(false);
     const [inputFields, setInputFields] = useState([{}]);
+    // const [newField, setNewField] = useState([{}]);
 
     // Handle add field----------------------------------------
-    const handleAdd = (newField) => {
+    const handleAddNewField = (newField) => {
         setInputFields([...inputFields, newField]);
     };
     // Handle remove field---------------------------------------
-    const handleRemove = (key) => {
+    const handleRemoveField = (key) => {
         const values = [...inputFields];
         const index = values.findIndex((item) => item.key === key);
         if (index !== -1) {
@@ -21,19 +24,38 @@ function AddInputContainer(edit) {
         }
         setInputFields(values);
     };
+    // Render Current field-----------------------------------------
+    // const renderCurrentField = (field)=>{
+    //   return field.map((item=>{
+    //     if(item.type === "text"){
+    //       return
+    //     }
+    //   }))
+    // }
 
     // Handle confirm ----------------------------------------------
     const onFinish = (values) => {
         const newValues = {
-            key: `${values.type}${values.label}`,
+            key: `${values.type}${uuid()}`,
             name: values.label,
             label: values.label,
             type: values.type,
         };
-        handleAdd(newValues);
+        handleAddNewField(newValues);
         setOpen(false);
     };
-    //
+
+    // Handle add current field
+    const addCurrentField = (field) => {
+        const newField = {
+            key: `${field.type}${uuid()}`,
+            name: field.label,
+            label: field.label,
+            type: field.type,
+        };
+        setInputFields([...inputFields, newField]);
+    };
+    //Render field
     const renderNewInputField = () =>
         inputFields.map((item) => {
             if (item.type === "text") {
@@ -46,10 +68,19 @@ function AddInputContainer(edit) {
                         />
                         <Button
                             type="primary"
-                            onClick={() => handleRemove(item.key)}
+                            onClick={() => handleRemoveField(item.key)}
                             style={{ marginLeft: "10px" }}
+                            disabled={edit.edit}
                         >
-                            Remove
+                            <MinusCircleOutlined />
+                        </Button>
+                        <Button
+                            type="primary"
+                            onClick={() => addCurrentField(item)}
+                            style={{ marginLeft: "10px" }}
+                            disabled={edit.edit}
+                        >
+                            <PlusOutlined />
                         </Button>
                     </Row>
                 );
@@ -63,10 +94,19 @@ function AddInputContainer(edit) {
                         />
                         <Button
                             type="primary"
-                            onClick={() => handleRemove(item.key)}
+                            onClick={() => handleRemoveField(item.key)}
                             style={{ marginLeft: "10px" }}
+                            disabled={edit.edit}
                         >
-                            Remove
+                            <MinusCircleOutlined />
+                        </Button>
+                        <Button
+                            type="primary"
+                            onClick={() => addCurrentField(item)}
+                            style={{ marginLeft: "10px" }}
+                            disabled={edit.edit}
+                        >
+                            <PlusOutlined />
                         </Button>
                     </Row>
                 );
@@ -80,10 +120,19 @@ function AddInputContainer(edit) {
                         />
                         <Button
                             type="primary"
-                            onClick={() => handleRemove(item.key)}
+                            onClick={() => handleRemoveField(item.key)}
                             style={{ marginLeft: "10px" }}
+                            disabled={edit.edit}
                         >
-                            Remove
+                            <MinusCircleOutlined />
+                        </Button>
+                        <Button
+                            type="primary"
+                            onClick={() => addCurrentField(item)}
+                            style={{ marginLeft: "10px" }}
+                            disabled={edit.edit}
+                        >
+                            <PlusOutlined />
                         </Button>
                     </Row>
                 );
