@@ -17,7 +17,11 @@ function AddInput({ onFinish, renderNewInputField, open, setOpen, edit }) {
                             <Form.Item name="label" label="Enter Label">
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="type" label="Type">
+                            <Form.Item
+                                name="type"
+                                label="Type"
+                                style={{ marginLeft: "10px" }}
+                            >
                                 <Select placeholder="Select Type">
                                     <Option value="text">Text</Option>
                                     <Option value="time">Time</Option>
