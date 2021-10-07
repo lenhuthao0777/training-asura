@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RemoveField from "../components/RemoveField";
 
 function RemoveFieldContainer({ edit, setInputFields, inputFields, id }) {
+    const [disabled, setDisabled] = useState(true);
     // Handle remove field---------------------------------------
     const handleRemoveField = () => {
         const values = [...inputFields];
@@ -11,7 +12,19 @@ function RemoveFieldContainer({ edit, setInputFields, inputFields, id }) {
         }
         setInputFields(values);
     };
-    return <RemoveField edit={edit} handleRemoveField={handleRemoveField} />;
+    useEffect(() => {
+        if (inputFields.length > 1 && edit === false) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [inputFields, edit]);
+    return (
+        <RemoveField
+            disabled={disabled}
+            handleRemoveField={handleRemoveField}
+        />
+    );
 }
 
 export default RemoveFieldContainer;

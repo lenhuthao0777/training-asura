@@ -2,13 +2,13 @@ import { MinusCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React from "react";
 
-function RemoveField({ edit, handleRemoveField }) {
+function RemoveField({ disabled, handleRemoveField }) {
     return (
         <Button
             type="primary"
             onClick={handleRemoveField}
             style={{ marginLeft: "10px" }}
-            disabled={edit.edit}
+            disabled={disabled}
         >
             <MinusCircleOutlined />
         </Button>

@@ -1,4 +1,6 @@
 import { Button, Form, Input, Row, Select } from "antd";
+import AddFiled from "./AddField";
+import AddFieldAtHead from "./AddFieldAtHead";
 
 function AddInput({
     onFinish,
@@ -7,6 +9,7 @@ function AddInput({
     setOpen,
     edit,
     setActionType,
+    inputFields,
 }) {
     const { Option } = Select;
     // Handle action type
@@ -59,22 +62,12 @@ function AddInput({
                 ) : null}
                 {edit === true ? null : (
                     <Row>
-                        <Form.Item style={{ marginRight: "10px" }}>
-                            <Button
-                                type="primary"
-                                onClick={() => handleAction("addField")}
-                            >
-                                Add Field
-                            </Button>
-                        </Form.Item>
-                        <Form.Item>
-                            <Button
-                                type="primary"
-                                onClick={() => handleAction("addFieldAtHead")}
-                            >
-                                Add Field At Head
-                            </Button>
-                        </Form.Item>
+                        <AddFiled handleAction={handleAction} open={open} />
+                        <AddFieldAtHead
+                            handleAction={handleAction}
+                            inputFields={inputFields}
+                            open={open}
+                        />
                     </Row>
                 )}
             </>

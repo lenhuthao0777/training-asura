@@ -1,17 +1,18 @@
 import React from "react";
 import { Form, Button } from "antd";
-function AddField({ handleAction, disabled }) {
+
+function AddFiledAtHead({ handleAction, disabled }) {
     return (
-        <Form.Item style={{ marginRight: "10px" }}>
+        <Form.Item>
             <Button
                 type="primary"
+                onClick={() => handleAction("addFieldAtHead")}
                 disabled={disabled}
-                onClick={() => handleAction("addField")}
             >
-                Add Field
+                Add Field At Head
             </Button>
         </Form.Item>
     );
 }
 
-export default AddField;
+export default AddFiledAtHead;
