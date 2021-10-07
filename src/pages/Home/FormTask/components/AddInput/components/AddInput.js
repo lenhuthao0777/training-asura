@@ -1,8 +1,19 @@
 import { Button, Form, Input, Row, Select } from "antd";
 
-function AddInput({ onFinish, renderNewInputField, open, setOpen, edit }) {
+function AddInput({
+    onFinish,
+    renderNewInputField,
+    open,
+    setOpen,
+    edit,
+    setActionType,
+}) {
     const { Option } = Select;
-
+    // Handle action type
+    let handleAction = (action) => {
+        setOpen(true);
+        setActionType(action);
+    };
     return (
         <Form
             name="dynamic_form_nest_item"
@@ -47,11 +58,24 @@ function AddInput({ onFinish, renderNewInputField, open, setOpen, edit }) {
                     </>
                 ) : null}
                 {edit === true ? null : (
-                    <Form.Item>
-                        <Button type="primary" onClick={() => setOpen(true)}>
-                            Add Field
-                        </Button>
-                    </Form.Item>
+                    <Row>
+                        <Form.Item style={{ marginRight: "10px" }}>
+                            <Button
+                                type="primary"
+                                onClick={() => handleAction("addField")}
+                            >
+                                Add Field
+                            </Button>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button
+                                type="primary"
+                                onClick={() => handleAction("addFieldAtHead")}
+                            >
+                                Add Field At Head
+                            </Button>
+                        </Form.Item>
+                    </Row>
                 )}
             </>
         </Form>

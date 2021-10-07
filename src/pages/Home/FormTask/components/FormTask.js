@@ -196,7 +196,7 @@ function FormTask({ data, edit, setEdit }) {
             },
             {
                 name: ["time"],
-                value: moment(values.time, "HH:mm:ss"),
+                value: moment(values.time, "HH:mm:ss.SS"),
             },
             {
                 name: ["dateOfBirth"],
@@ -229,11 +229,13 @@ function FormTask({ data, edit, setEdit }) {
     const onFinish = (values) => {
         setEdit(true);
         const newValues = {
+            ...values,
             time: values.time._d,
             dateOfBirth: values.dateOfBirth._d,
-            ...values,
+            workStartTime: values.workStartTime._d,
+            workFinishTime: values.workFinishTime._d,
         };
-        API.editData(newValues, values.id);
+        API.editData(values.id, newValues);
     };
     return (
         <div style={{ width: "30%", display: "flex", flexDirection: "column" }}>

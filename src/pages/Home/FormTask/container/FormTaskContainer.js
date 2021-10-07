@@ -14,7 +14,6 @@ function FormContainer() {
             setTaskDetailData(data);
         });
     };
-
     useEffect(() => {
         getTaskById();
     }, [id]);
