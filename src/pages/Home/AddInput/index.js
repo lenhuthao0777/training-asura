@@ -1,2 +1,2 @@
-import DynamicForm from "./container/AddInputContainer";
+import DynamicForm from "./components/AddInput";
 export default DynamicForm;

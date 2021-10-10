@@ -1,6 +1,7 @@
 import { Button, Space, Table } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+import withTaskList from "../container/TaskListContainer";
 
 function TaskList({ taskData, isLoading }) {
     const { Column } = Table;
@@ -42,4 +43,4 @@ function TaskList({ taskData, isLoading }) {
     );
 }
 
-export default TaskList;
+export default withTaskList(TaskList);
