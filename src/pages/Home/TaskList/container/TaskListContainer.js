@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import API from "services/Client";
 import TaskList from "../components/TaskList";
+import { v4 as uuid } from "uuid";
 function TaskListContainer() {
     const [isLoading, setIsLoading] = useState(false);
     const [taskData, setTaskData] = useState([]);
@@ -23,7 +24,7 @@ function TaskListContainer() {
                 currentJob: item.currentJob,
                 experience: item.experience,
                 note: item.note,
-                key: item.id,
+                key: uuid(),
                 idCard: item.idCard,
                 workStartTime: moment(item.workStartTime).format("HH:mm:ss"),
                 workFinishTime: moment(item.workFinishTime).format("HH:mm:ss"),

@@ -4,8 +4,6 @@ import API from "services/Client";
 import FormTask from "../components/FormTask";
 
 function FormContainer() {
-    const [edit, setEdit] = useState(true);
-
     const [taskDetailData, setTaskDetailData] = useState({});
     const { id } = useParams();
     // Get data by id
@@ -18,7 +16,7 @@ function FormContainer() {
         getTaskById();
     }, [id]);
 
-    return <FormTask data={taskDetailData} edit={edit} setEdit={setEdit} />;
+    return <FormTask data={taskDetailData} id={id} />;
 }
 
 export default FormContainer;
