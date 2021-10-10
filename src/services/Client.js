@@ -9,7 +9,7 @@ const API = {
                 console.log(err);
             });
     },
-    editData: async (data, id) => {
+    editData: async (id, data) => {
         await fetch(`${BASE_URL}/${id}`, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
             headers: {
