@@ -1,13 +1,14 @@
 import { Button, Space, Table } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+import withTaskList from "../container/TaskListContainer";
 
-function TaskList({ taskData, isLoading }) {
+function TaskList({ data, isLoading }) {
     const { Column } = Table;
     return (
         <div className="container">
             <Table
-                dataSource={taskData}
+                dataSource={data}
                 loading={isLoading}
                 style={{ flex: "1", margin: "0 20px" }}
             >
@@ -42,4 +43,4 @@ function TaskList({ taskData, isLoading }) {
     );
 }
 
-export default TaskList;
+export default withTaskList(TaskList);

@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { Component } from "react";
 import API from "services/Client";
-import FormTask from "../components/FormTask";
 
-function FormContainer() {
-    const [taskDetailData, setTaskDetailData] = useState({});
-    const { id } = useParams();
-    // Get data by id
-    const getTaskById = () => {
-        API.getDataById(id, (data) => {
-            setTaskDetailData(data);
-        });
+export default function withFormContainer(WrappedComponent, fetchApi) {
+    return class FormTaskContainer extends Component {
+        constructor(props) {
+            super(props);
+            this.getTaskById = this.getTaskById.bind(this);
+            this.state = {
+                task: {},
+            };
+        }
+        getTaskById = (id) => {
+            API.getDataById(id, (data) => {
+                this.setState({ task: data });
+            });
+        };
+        render() {
+            return (
+                <WrappedComponent
+                    getTaskById={this.getTaskById}
+                    data={this.state.task}
+                    {...this.props}
+                />
+            );
+        }
     };
-    useEffect(() => {
-        getTaskById();
-    }, [id]);
-
-    return <FormTask data={taskDetailData} id={id} />;
 }
-
-export default FormContainer;
