@@ -1,5 +1,6 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Row, Select, TimePicker } from "antd";
+import { useEffect, useState } from "react";
 import { withAddInput } from "../container/AddInputContainer";
 function AddInput({
     data,
@@ -11,6 +12,15 @@ function AddInput({
     isOpen,
 }) {
     const { Option } = Select;
+
+    const [disabled, setDisabled] = useState(true);
+    useEffect(() => {
+        if (isOpen === true) {
+            setDisabled(true);
+        } else {
+            setDisabled(false);
+        }
+    }, [isOpen]);
     const renderField = () => {
         // eslint-disable-next-line array-callback-return
         return data.map((field) => {
@@ -133,11 +143,16 @@ function AddInput({
                 </Form>
             ) : null}
             <Row style={{ margin: " 20px 0" }}>
-                <Button onClick={() => handleAction("addField")} type="primary">
+                <Button
+                    disabled={disabled}
+                    onClick={() => handleAction("addField")}
+                    type="primary"
+                >
                     Add Field
                 </Button>
                 {data.length > 0 ? (
                     <Button
+                        disabled={disabled}
                         onClick={() => handleAction("addFieldAtHead")}
                         style={{ marginLeft: "20px" }}
                         type="primary"

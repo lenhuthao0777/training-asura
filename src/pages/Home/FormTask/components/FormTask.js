@@ -1,13 +1,13 @@
-import { Button, Form, Row, Typography } from "antd";
-import Input from "common/InputText";
+import { Button, Form, Row } from "antd";
 import InputDate from "common/InputDate";
+import Input from "common/InputText";
 import InputTime from "common/InputTime";
+import RangeTimePicker from "common/RangePickerInput";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import API from "services/Client";
-import RangeTimePicker from "common/RangePickerInput";
-
-function FormTask({ data, id }) {
+import { useParams } from "react-router-dom";
+import withFormContainer from "../container/FormTaskContainer";
+function FormTask({ data, getTaskById }) {
     const [inputValue, setInputValue] = useState({
         // id: data.id,
         // taskName: data.taskName,
@@ -25,7 +25,7 @@ function FormTask({ data, id }) {
         // workFinishTime: data.workFinishTime,
     });
     const [edit, setEdit] = useState(true);
-
+    const { id } = useParams();
     // Handle format time
     const formatTime = (time) => moment(time).format("HH:mm:ss");
 
@@ -33,6 +33,9 @@ function FormTask({ data, id }) {
     const formatDate = (date) => moment(date).format("DD/MM/YYYY");
 
     // -------------------------------------
+    useEffect(() => {
+        getTaskById(id);
+    }, [getTaskById, id]);
     useEffect(() => {
         setInputValue(data);
     }, [data]);
@@ -157,11 +160,11 @@ function FormTask({ data, id }) {
         // console.log(data);
     };
     function onChangeRangeTimePicker(dateString) {
-        // setInputValue({
-        //     ...inputValue,
-        //     workStartTime: dateString[0],
-        //     workFinishTime: dateString[1],
-        // });
+        setInputValue({
+            ...inputValue,
+            workStartTime: dateString[0],
+            workFinishTime: dateString[1],
+        });
     }
     function onChangeDatePicker(dateString) {
         setInputValue({ ...inputValue, dateOfBirth: dateString });
@@ -170,60 +173,58 @@ function FormTask({ data, id }) {
         setInputValue({ ...inputValue, time: timeStrings });
     }
     // Render form--------------------------------------
-    const renderInput = () => (
-        <>
-            {input.map((item) => {
-                switch (item.type) {
-                    case "text":
-                        return (
-                            <Input
-                                name={item.name}
-                                label={item.label}
-                                disabled={edit}
-                                key={item.id}
-                                value={item.value}
-                                onChange={onChangeInputText}
-                            />
-                        );
-                    case "time":
-                        return (
-                            <InputTime
-                                name={item.name}
-                                label={item.label}
-                                disabled={edit}
-                                key={item.id}
-                                value={item.value}
-                                onChange={onChangeTimePicker}
-                            />
-                        );
-                    case "date":
-                        return (
-                            <InputDate
-                                name={item.name}
-                                label={item.label}
-                                disabled={edit}
-                                key={item.id}
-                                value={item.value}
-                                onChange={onChangeDatePicker}
-                            />
-                        );
-                    case "timePicker":
-                        return (
-                            <RangeTimePicker
-                                name={item.name}
-                                label={item.label}
-                                disabled={edit}
-                                key={item.id}
-                                value={item.value}
-                                onChange={onChangeRangeTimePicker}
-                            />
-                        );
-                    default:
-                        break;
-                }
-            })}
-        </>
-    );
+    const renderInput = () =>
+        // eslint-disable-next-line array-callback-return
+        input.map((item) => {
+            switch (item.type) {
+                case "text":
+                    return (
+                        <Input
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeInputText}
+                        />
+                    );
+                case "time":
+                    return (
+                        <InputTime
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeTimePicker}
+                        />
+                    );
+                case "date":
+                    return (
+                        <InputDate
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeDatePicker}
+                        />
+                    );
+                case "timePicker":
+                    return (
+                        <RangeTimePicker
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeRangeTimePicker}
+                        />
+                    );
+                default:
+                    break;
+            }
+        });
     return (
         <div
             style={{ width: "30%", display: "flex", flexDirection: "column" }}
@@ -269,4 +270,4 @@ function FormTask({ data, id }) {
     );
 }
 
-export default FormTask;
+export default withFormContainer(FormTask);
