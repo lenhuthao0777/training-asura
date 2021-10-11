@@ -5,7 +5,6 @@ import InputTime from "common/InputTime";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import API from "services/Client";
-import "../assets/style.scss";
 import RangeTimePicker from "common/RangePickerInput";
 
 function FormTask({ data, id }) {
@@ -45,94 +44,95 @@ function FormTask({ data, id }) {
             label: "Id:",
             name: "id",
             type: "text",
-            value: inputValue.id,
+            value: inputValue.id || "",
         },
         {
             id: 2,
             label: "Task Name:",
             name: "taskName",
             type: "text",
-            value: inputValue.taskName,
+            value: inputValue.taskName || "",
         },
         {
             id: 3,
             label: "Time:",
             name: "time",
             type: "time",
-            value: formatTime(inputValue.time),
+            value: formatTime(inputValue.time) || "",
         },
         {
             id: 4,
             label: "Name:",
             name: "name",
             type: "text",
-            value: inputValue.name,
+            value: inputValue.name || "",
         },
         {
             id: 5,
             label: "Date Of Birth:",
             name: "dateOfBirth",
             type: "date",
-            value: formatDate(inputValue.dateOfBirth),
+            value: formatDate(inputValue.dateOfBirth) || "",
         },
         {
             id: 6,
             label: "Address:",
             name: "address",
             type: "text",
-            value: inputValue.address,
+            value: inputValue.address || "",
         },
         {
             id: 7,
             label: "Phone:",
             name: "phone",
             type: "text",
-            value: inputValue.phone,
+            value: inputValue.phone || "",
         },
         {
             id: 8,
             label: "Email:",
             name: "email",
             type: "text",
-            value: inputValue.email,
+            value: inputValue.email || "",
         },
         {
             id: 9,
             label: "Current Job:",
             name: "currentJob",
             type: "text",
-            value: inputValue.currentJob,
+            value: inputValue.currentJob || "",
         },
         {
             id: 10,
             label: "Experience:",
             name: "experience",
             type: "text",
-            value: inputValue.experience,
+            value: inputValue.experience || "",
         },
         {
             id: 11,
             label: "Note:",
             name: "note",
             type: "text",
-            value: inputValue.note,
+            value: inputValue.note || "",
         },
         {
             id: 12,
             label: "Id Card:",
             name: "idCard",
             type: "text",
-            value: inputValue.idCard,
+            value: inputValue.idCard || "",
         },
         {
             id: 13,
             label: "Work Time:",
             name: ["workStartTime", "workFinishTime"],
             type: "timePicker",
-            value: [
-                formatTime(inputValue.workStartTime),
-                formatTime(inputValue.workFinishTime),
-            ],
+            value:
+                [
+                    formatTime(inputValue.workStartTime),
+                    formatTime(inputValue.workFinishTime),
+                ] || "",
         },
     ];
 

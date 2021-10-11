@@ -49,7 +49,7 @@ export default function withTaskList(WrappedComponent) {
         render() {
             return (
                 <WrappedComponent
-                    taskData={this.state.taskData}
+                    data={this.state.taskData}
                     isLoading={this.state.isLoading}
                     {...this.props}
                 />
