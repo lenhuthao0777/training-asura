@@ -99,11 +99,11 @@ function AddInput({
             {data.length > 0 ? (
                 <Form name="dynamic_form_nest_item" autoComplete="off">
                     {renderField()}
-                    {/* <Form.Item>
+                    <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Submit
                         </Button>
-                    </Form.Item> */}
+                    </Form.Item>
                 </Form>
             ) : null}
             {isOpen === true ? (
@@ -128,7 +128,7 @@ function AddInput({
                             </Select>
                         </Form.Item>
                     </Row>
-                    <Row>
+                    <Row style={{marginLeft: "82px"}}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
                                 Confirm
