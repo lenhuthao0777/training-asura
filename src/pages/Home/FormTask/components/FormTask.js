@@ -1,169 +1,273 @@
-import Edit from "common/Edit";
+import { Button, Form, Row } from "antd";
+import InputDate from "common/InputDate";
+import Input from "common/InputText";
+import InputTime from "common/InputTime";
+import RangeTimePicker from "common/RangePickerInput";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import "../assets/style.scss";
-function FormTask({ taskDetailData }) {
+import { useParams } from "react-router-dom";
+import withFormContainer from "../container/FormTaskContainer";
+function FormTask({ data, getTaskById }) {
+    const [inputValue, setInputValue] = useState({
+        // id: data.id,
+        // taskName: data.taskName,
+        // time: data.time,
+        // name: data.name,
+        // dateOfBirth: data.dateOfBirth,
+        // address: data.address,
+        // phone: data.phone,
+        // email: data.email,
+        // currentJob: data.currentJob,
+        // experience: data.experience,
+        // note: data.note,
+        // idCard: data.idCard,
+        // workStartTime: data.workStartTime,
+        // workFinishTime: data.workFinishTime,
+    });
     const [edit, setEdit] = useState(true);
-    const [value, setValue] = useState({});
-    useEffect(() => {
-        setValue(taskDetailData);
-    }, [taskDetailData]);
+    const { id } = useParams();
+    // Handle format time
+    const formatTime = (time) => moment(time).format("HH:mm:ss");
 
-    // Handle change input
-    const onChangeInput = (e) => {
-        const newData = { ...value };
-        newData[e.target.name] = e.target.value;
-        setValue(newData);
-    };
-    // Array input
+    // Handle format date
+    const formatDate = (date) => moment(date).format("DD/MM/YYYY");
+
+    // -------------------------------------
+    useEffect(() => {
+        getTaskById(id);
+    }, [getTaskById, id]);
+    useEffect(() => {
+        setInputValue(data);
+    }, [data]);
+
+    // Array input----------------------------
     const input = [
         {
             id: 1,
-            label: "Id",
+            label: "Id:",
             name: "id",
-            type: "number",
-            disable: "true",
-            value: value.id || "",
+            type: "text",
+            value: inputValue.id || "",
         },
         {
             id: 2,
-            label: "Task Name",
+            label: "Task Name:",
             name: "taskName",
             type: "text",
-            disable: "false",
-            value: value.taskName || "",
+            value: inputValue.taskName || "",
         },
         {
             id: 3,
-            label: "Time",
+            label: "Time:",
             name: "time",
             type: "time",
-            disable: "false",
-            value: value.time || "",
+            value: formatTime(inputValue.time) || "",
         },
         {
             id: 4,
-            label: "Name",
+            label: "Name:",
             name: "name",
             type: "text",
-            disable: "false",
-            value: value.name || "",
+            value: inputValue.name || "",
         },
         {
             id: 5,
-            label: "Date Of Birth",
+            label: "Date Of Birth:",
             name: "dateOfBirth",
             type: "date",
-            disable: "false",
-            value: value.dateOfBirth || "",
+            value: formatDate(inputValue.dateOfBirth) || "",
         },
         {
             id: 6,
-            label: "Address",
+            label: "Address:",
             name: "address",
             type: "text",
-            disable: "false",
-            value: value.address || "",
+            value: inputValue.address || "",
         },
         {
             id: 7,
-            label: "Phone",
+            label: "Phone:",
             name: "phone",
             type: "text",
-            disable: "false",
-            value: value.phone || "",
+            value: inputValue.phone || "",
         },
         {
             id: 8,
-            label: "Email",
+            label: "Email:",
             name: "email",
-            type: "email",
-            disable: "false",
-            value: value.email || "",
+            type: "text",
+            value: inputValue.email || "",
         },
         {
             id: 9,
-            label: "Current Job",
+            label: "Current Job:",
             name: "currentJob",
             type: "text",
-            disable: "false",
-            value: value.currentJob || "",
+            value: inputValue.currentJob || "",
         },
         {
             id: 10,
-            label: "Experience",
+            label: "Experience:",
             name: "experience",
             type: "text",
-            disable: "false",
-            value: value.experience || "",
+            value: inputValue.experience || "",
         },
         {
             id: 11,
-            label: "Note",
+            label: "Note:",
             name: "note",
             type: "text",
-            disable: "false",
-            value: value.note || "",
+            value: inputValue.note || "",
+        },
+        {
+            id: 12,
+            label: "Id Card:",
+            name: "idCard",
+            type: "text",
+            value: inputValue.idCard || "",
+        },
+        {
+            id: 13,
+            label: "Work Time:",
+            name: ["workStartTime", "workFinishTime"],
+            type: "timePicker",
+            value:
+                [
+                    formatTime(inputValue.workStartTime),
+                    formatTime(inputValue.workFinishTime),
+                ] || "",
         },
     ];
-    return (
-        <div style={{ width: "30%" }}>
-            <h2 style={{ textAlign: "center" }}>{edit ? "Detail" : "Edit"}</h2>
-            <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setEdit(false)}
-                style={{ margin: "20px 0" }}
-            >
-                Edit
-            </button>
-            <form>
-                {input.map((input) => {
-                    if (edit === true) {
-                        return (
-                            <div className="form-group" key={input.id}>
-                                <label htmlFor="exampleInputEmail1">{input.label}:</label>
-                                <input
-                                    type={input.type}
-                                    value={input.value}
-                                    name={input.name}
-                                    disabled
-                                    onChange={onChangeInput}
-                                    className="form-control"
-                                />
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div className="form-group" key={input.id}>
-                                <label htmlFor="exampleInputEmail1">{input.label}:</label>
-                                <input
-                                    type={input.type}
-                                    value={input.value}
-                                    name={input.name}
-                                    onChange={onChangeInput}
-                                    className="form-control"
-                                />
-                            </div>
-                        );
-                    }
-                })}
 
-                {edit ? null : (
-                    <>
-                        <Edit data={value} edit={edit} setEdit={setEdit} />
-                        <button
-                            type="button"
-                            className="btn btn-danger"
-                            style={{ marginTop: "20px", marginLeft: "15px" }}
+    // Handle change input----------------------------------
+    const onFinish = () => {
+        setEdit(true);
+        // const newValues = {
+        //     ...inputValue,
+        //     time: inputValue.time._d,
+        //     dateOfBirth: inputValue.dateOfBirth._d,
+        //     workStartTime: inputValue.workStartTime._d,
+        //     workFinishTime: inputValue.workFinishTime._d,
+        // };
+        // API.editData(inputValue.id, newValues);
+        console.log(inputValue);
+    };
+
+    const onChangeInputText = (e) => {
+        const newData = { ...inputValue };
+        newData[e.target.name] = e.target.value;
+        setInputValue(newData);
+        // console.log(data);
+    };
+    function onChangeRangeTimePicker(dateString) {
+        setInputValue({
+            ...inputValue,
+            workStartTime: dateString[0],
+            workFinishTime: dateString[1],
+        });
+    }
+    function onChangeDatePicker(dateString) {
+        setInputValue({ ...inputValue, dateOfBirth: dateString });
+    }
+    function onChangeTimePicker(timeStrings) {
+        setInputValue({ ...inputValue, time: timeStrings });
+    }
+    // Render form--------------------------------------
+    const renderInput = () =>
+        // eslint-disable-next-line array-callback-return
+        input.map((item) => {
+            switch (item.type) {
+                case "text":
+                    return (
+                        <Input
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeInputText}
+                        />
+                    );
+                case "time":
+                    return (
+                        <InputTime
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeTimePicker}
+                        />
+                    );
+                case "date":
+                    return (
+                        <InputDate
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeDatePicker}
+                        />
+                    );
+                case "timePicker":
+                    return (
+                        <RangeTimePicker
+                            name={item.name}
+                            label={item.label}
+                            disabled={edit}
+                            key={item.id}
+                            value={item.value}
+                            onChange={onChangeRangeTimePicker}
+                        />
+                    );
+                default:
+                    break;
+            }
+        });
+    return (
+        <div
+            style={{ width: "30%", display: "flex", flexDirection: "column" }}
+            className="container"
+        >
+            <h1 style={{ textAlign: "center" }}>{edit ? "DETAIL" : "EDIT"}</h1>
+            <Form
+                name="global_state"
+                layout="vertical"
+                onFinish={onFinish}
+                style={{ margin: "0 0 50px 0" }}
+            >
+                <Row>
+                    {edit ? null : (
+                        <Form.Item style={{ marginRight: "20px" }}>
+                            <Button
+                                type="primary"
+                                size="large"
+                                htmlType="submit"
+                            >
+                                Save Edit
+                            </Button>
+                        </Form.Item>
+                    )}
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            size="large"
                             onClick={() => setEdit(!edit)}
                         >
-                            Cancel
-                        </button>
-                    </>
+                            {edit ? "EDIT" : "CANCEL"}
+                        </Button>
+                    </Form.Item>
+                </Row>
+                {renderInput(edit)}
+                {edit ? null : (
+                    <Button type="primary" htmlType="submit" size="large">
+                        Submit
+                    </Button>
                 )}
-            </form>
+            </Form>
         </div>
     );
 }
 
-export default FormTask;
+export default withFormContainer(FormTask);

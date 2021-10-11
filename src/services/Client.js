@@ -9,7 +9,7 @@ const API = {
                 console.log(err);
             });
     },
-    editData: async (data, id) => {
+    editData: async (id, data) => {
         await fetch(`${BASE_URL}/${id}`, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -20,6 +20,14 @@ const API = {
             body: JSON.stringify(data), // body data type must match "Content-Type" header
         })
             .then((res) => res.json())
+            .catch((error) => {
+                console.log(error);
+            });
+    },
+    getDataById: async (id,callback) => {
+        await fetch(`${BASE_URL}/${id}`)
+            .then((res) => res.json())
+            .then(callback)
             .catch((error) => {
                 console.log(error);
             });

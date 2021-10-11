@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import FormTask from "../components/FormTask";
-function FormContainer() {
-    const { taskDetail } = useSelector((state) => state.TaskReducer);
-    const [taskDetailData, setTaskDetailData] = useState({
-        id: taskDetail.id,
-        taskName: taskDetail.taskName,
-        time: taskDetail.time,
-        name: taskDetail.name,
-        dateOfBirth: taskDetail.dateOfBirth,
-        address: taskDetail.address,
-        phone: taskDetail.phone,
-        email: taskDetail.email,
-        currentJob: taskDetail.currentJob,
-        experience: taskDetail.experience,
-        note: taskDetail.note,
-    });
+import React, { Component } from "react";
+import API from "services/Client";
 
-    useEffect(() => {
-        setTaskDetailData(taskDetail);
-    }, [taskDetail]);
-    return <FormTask taskDetailData={taskDetailData} />;
+export default function withFormContainer(WrappedComponent, fetchApi) {
+    return class FormTaskContainer extends Component {
+        constructor(props) {
+            super(props);
+            this.getTaskById = this.getTaskById.bind(this);
+            this.state = {
+                task: {},
+            };
+        }
+        getTaskById = (id) => {
+            API.getDataById(id, (data) => {
+                this.setState({ task: data });
+            });
+        };
+        render() {
+            return (
+                <WrappedComponent
+                    getTaskById={this.getTaskById}
+                    data={this.state.task}
+                    {...this.props}
+                />
+            );
+        }
+    };
 }
-
-export default FormContainer;

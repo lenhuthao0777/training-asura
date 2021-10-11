@@ -1,2 +1,2 @@
-import TaskList from "./container/TaskListContainer";
+import TaskList from "./components/TaskList";
 export default TaskList;
