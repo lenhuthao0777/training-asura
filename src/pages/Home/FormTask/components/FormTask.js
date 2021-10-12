@@ -6,37 +6,18 @@ import RangeTimePicker from "common/RangePickerInput";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import withFormContainer from "../container/FormTaskContainer";
-function FormTask({ data, getTaskById }) {
-    const [inputValue, setInputValue] = useState({
-        // id: data.id,
-        // taskName: data.taskName,
-        // time: data.time,
-        // name: data.name,
-        // dateOfBirth: data.dateOfBirth,
-        // address: data.address,
-        // phone: data.phone,
-        // email: data.email,
-        // currentJob: data.currentJob,
-        // experience: data.experience,
-        // note: data.note,
-        // idCard: data.idCard,
-        // workStartTime: data.workStartTime,
-        // workFinishTime: data.workFinishTime,
-    });
+function FormTask({ taskById, getTaskById, editData }) {
+    const [inputValue, setInputValue] = useState({});
     const [edit, setEdit] = useState(true);
     const { id } = useParams();
-    // Handle format time
-    // const formatTime = (time) => moment(time).format("HH:mm:ss");
 
-    // Handle format date
-    // const formatDate = (date) => moment(date).format("DD/MM/YYYY");
     // -------------------------------------
     useEffect(() => {
         getTaskById(id);
     }, [getTaskById, id]);
     useEffect(() => {
-        setInputValue(data);
-    }, [data]);
+        setInputValue(taskById);
+    }, [taskById]);
 
     // Array input----------------------------
     const input = [
@@ -128,7 +109,7 @@ function FormTask({ data, getTaskById }) {
             id: 13,
             label: "Work Time:",
             name: ["workStartTime", "workFinishTime"],
-            type: "timePicker",
+            type: "timeRangePicker",
             value: [
                 inputValue.workStartTime || "",
                 inputValue.workFinishTime || "",
@@ -146,7 +127,7 @@ function FormTask({ data, getTaskById }) {
         //     workStartTime: inputValue.workStartTime._d,
         //     workFinishTime: inputValue.workFinishTime._d,
         // };
-        // API.editData(inputValue.id, newValues);
+        editData(inputValue.id, inputValue);
         console.log(inputValue);
     };
 
@@ -156,20 +137,20 @@ function FormTask({ data, getTaskById }) {
         setInputValue(newData);
         // console.log(data);
     };
-    function onChangeRangeTimePicker(dateString) {
+    function onChangeRangeTimePicker(date, dateString) {
         setInputValue({
             ...inputValue,
             workStartTime: dateString[0],
             workFinishTime: dateString[1],
         });
     }
-    function onChangeDatePicker(dateString) {
+    function onChangeDatePicker(date, dateString) {
         setInputValue({ ...inputValue, dateOfBirth: dateString });
     }
-    function onChangeTimePicker(timeStrings) {
+    function onChangeTimePicker(time, timeStrings) {
         setInputValue({ ...inputValue, time: timeStrings });
     }
-    // Render form--------------------------------------
+    // Render input form--------------------------------------
     const renderInput = () =>
         // eslint-disable-next-line array-callback-return
         input.map((item) => {
@@ -207,7 +188,7 @@ function FormTask({ data, getTaskById }) {
                             onChange={onChangeDatePicker}
                         />
                     );
-                case "timePicker":
+                case "timeRangePicker":
                     return (
                         <RangeTimePicker
                             name={item.name}
@@ -256,7 +237,7 @@ function FormTask({ data, getTaskById }) {
                         </Button>
                     </Form.Item>
                 </Row>
-                {renderInput(edit)}
+                {renderInput()}
                 {edit ? null : (
                     <Button type="primary" htmlType="submit" size="large">
                         Submit
