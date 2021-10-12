@@ -153,6 +153,10 @@ function AddInput() {
             }
         });
     };
+    // Handle submit form
+    const handleSubmitForm = (value) => {
+        console.log(value);
+    };
 
     return (
         <div
@@ -166,7 +170,11 @@ function AddInput() {
         >
             <h1 style={{ margin: "20px 0" }}>Dynamic Form</h1>
             {inputFields.length > 0 ? (
-                <Form name="dynamic_form_nest_item" autoComplete="off">
+                <Form
+                    name="dynamic_form_nest_item"
+                    autoComplete="off"
+                    onFinish={handleSubmitForm}
+                >
                     {renderField()}
                     <Form.Item>
                         <Button type="primary" htmlType="submit">

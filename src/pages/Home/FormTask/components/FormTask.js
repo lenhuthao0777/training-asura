@@ -6,18 +6,18 @@ import RangeTimePicker from "common/RangePickerInput";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import withFormContainer from "../container/FormTaskContainer";
-function FormTask({ data, getTaskById }) {
+function FormTask({ taskById, getTaskById, editData }) {
     const [inputValue, setInputValue] = useState({});
     const [edit, setEdit] = useState(true);
     const { id } = useParams();
-   
+
     // -------------------------------------
     useEffect(() => {
         getTaskById(id);
     }, [getTaskById, id]);
     useEffect(() => {
-        setInputValue(data);
-    }, [data]);
+        setInputValue(taskById);
+    }, [taskById]);
 
     // Array input----------------------------
     const input = [
@@ -127,7 +127,7 @@ function FormTask({ data, getTaskById }) {
         //     workStartTime: inputValue.workStartTime._d,
         //     workFinishTime: inputValue.workFinishTime._d,
         // };
-        // API.editData(inputValue.id, newValues);
+        editData(inputValue.id, inputValue);
         console.log(inputValue);
     };
 
@@ -137,17 +137,17 @@ function FormTask({ data, getTaskById }) {
         setInputValue(newData);
         // console.log(data);
     };
-    function onChangeRangeTimePicker(dateString) {
+    function onChangeRangeTimePicker(date, dateString) {
         setInputValue({
             ...inputValue,
             workStartTime: dateString[0],
             workFinishTime: dateString[1],
         });
     }
-    function onChangeDatePicker(dateString) {
+    function onChangeDatePicker(date, dateString) {
         setInputValue({ ...inputValue, dateOfBirth: dateString });
     }
-    function onChangeTimePicker(timeStrings) {
+    function onChangeTimePicker(time, timeStrings) {
         setInputValue({ ...inputValue, time: timeStrings });
     }
     // Render input form--------------------------------------
