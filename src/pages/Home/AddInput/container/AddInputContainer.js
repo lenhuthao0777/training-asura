@@ -83,7 +83,6 @@ export function withAddInput(WrappedComponent) {
                 this.handleAddFieldHead(value);
             }
             this.setState({ isOpen: false });
-            // console.log(value);
         };
 
         // Handle action type

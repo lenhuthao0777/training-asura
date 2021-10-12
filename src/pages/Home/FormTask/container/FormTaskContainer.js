@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import API from "services/Client";
 
-export default function withFormContainer(WrappedComponent, fetchApi) {
+export default function withFormContainer(WrappedComponent) {
     return class FormTaskContainer extends Component {
         constructor(props) {
             super(props);

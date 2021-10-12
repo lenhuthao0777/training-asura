@@ -11,9 +11,8 @@ function AddInput({
     handleClose,
     isOpen,
 }) {
-    const { Option } = Select;
-
     const [disabled, setDisabled] = useState(true);
+    const { Option } = Select;
     useEffect(() => {
         if (isOpen === true) {
             setDisabled(true);
@@ -128,7 +127,7 @@ function AddInput({
                             </Select>
                         </Form.Item>
                     </Row>
-                    <Row style={{marginLeft: "82px"}}>
+                    <Row style={{ marginLeft: "82px" }}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
                                 Confirm
