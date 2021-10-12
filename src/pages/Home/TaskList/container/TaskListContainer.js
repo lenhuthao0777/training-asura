@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { Component } from "react";
 import API from "services/Client";
 import { v4 as uuid } from "uuid";
@@ -31,12 +30,8 @@ export default function withTaskList(WrappedComponent) {
                     note: item.note,
                     key: uuid(),
                     idCard: item.idCard,
-                    workStartTime: moment(item.workStartTime).format(
-                        "HH:mm:ss"
-                    ),
-                    workFinishTime: moment(item.workFinishTime).format(
-                        "HH:mm:ss"
-                    ),
+                    workStartTime: item.workStartTime,
+                    workFinishTime: item.workFinishTime,
                 }));
                 this.setState({ taskData: newTaskData });
             }).finally(() => {
