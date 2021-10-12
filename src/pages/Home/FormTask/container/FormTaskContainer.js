@@ -5,13 +5,13 @@ export default function withFormContainer(WrappedComponent) {
     return class FormTaskContainer extends Component {
         constructor(props) {
             super(props);
-            this.getTaskById = this.getTaskById.bind(this);
+            this.getDataById = this.getDataById.bind(this);
             this.editData = this.editData.bind(this);
             this.state = {
                 task: {},
             };
         }
-        getTaskById = (id) => {
+        getDataById = (id) => {
             API.getDataById(id, (data) => {
                 this.setState({ task: data });
             });
@@ -22,7 +22,7 @@ export default function withFormContainer(WrappedComponent) {
         render() {
             return (
                 <WrappedComponent
-                    getTaskById={this.getTaskById}
+                    getDataById={this.getDataById}
                     taskById={this.state.task}
                     editData={this.editData}
                     {...this.props}
