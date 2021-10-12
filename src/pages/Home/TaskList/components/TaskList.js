@@ -32,7 +32,7 @@ function TaskList({ data, isLoading }) {
                             </Link>
                             <Link to="dynamic">
                                 <Button size="large" type="primary">
-                                    Dynamic Form
+                                    Dynamic Forms
                                 </Button>
                             </Link>
                         </Space>
