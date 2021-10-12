@@ -3,7 +3,6 @@ import InputDate from "common/InputDate";
 import Input from "common/InputText";
 import InputTime from "common/InputTime";
 import RangeTimePicker from "common/RangePickerInput";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import withFormContainer from "../container/FormTaskContainer";
@@ -27,11 +26,10 @@ function FormTask({ data, getTaskById }) {
     const [edit, setEdit] = useState(true);
     const { id } = useParams();
     // Handle format time
-    const formatTime = (time) => moment(time).format("HH:mm:ss");
+    // const formatTime = (time) => moment(time).format("HH:mm:ss");
 
     // Handle format date
-    const formatDate = (date) => moment(date).format("DD/MM/YYYY");
-
+    // const formatDate = (date) => moment(date).format("DD/MM/YYYY");
     // -------------------------------------
     useEffect(() => {
         getTaskById(id);
@@ -61,7 +59,7 @@ function FormTask({ data, getTaskById }) {
             label: "Time:",
             name: "time",
             type: "time",
-            value: formatTime(inputValue.time) || "",
+            value: inputValue.time || "",
         },
         {
             id: 4,
@@ -75,7 +73,7 @@ function FormTask({ data, getTaskById }) {
             label: "Date Of Birth:",
             name: "dateOfBirth",
             type: "date",
-            value: formatDate(inputValue.dateOfBirth) || "",
+            value: inputValue.dateOfBirth || "",
         },
         {
             id: 6,
@@ -131,11 +129,10 @@ function FormTask({ data, getTaskById }) {
             label: "Work Time:",
             name: ["workStartTime", "workFinishTime"],
             type: "timePicker",
-            value:
-                [
-                    formatTime(inputValue.workStartTime),
-                    formatTime(inputValue.workFinishTime),
-                ] || "",
+            value: [
+                inputValue.workStartTime || "",
+                inputValue.workFinishTime || "",
+            ],
         },
     ];
 
