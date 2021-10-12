@@ -90,6 +90,7 @@ function AddInput() {
     const handleClose = () => {
         setIsOpen(false);
     };
+    // render field
     const renderField = () => {
         // eslint-disable-next-line array-callback-return
         return inputFields.map((field) => {

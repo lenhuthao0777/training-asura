@@ -6,15 +6,15 @@ import RangeTimePicker from "common/RangePickerInput";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import withFormContainer from "../container/FormTaskContainer";
-function FormTask({ taskById, getTaskById, editData }) {
+function FormTask({ taskById, getDataById, editData }) {
     const [inputValue, setInputValue] = useState({});
     const [edit, setEdit] = useState(true);
     const { id } = useParams();
 
     // -------------------------------------
     useEffect(() => {
-        getTaskById(id);
-    }, [getTaskById, id]);
+        getDataById(id);
+    }, [getDataById, id]);
     useEffect(() => {
         setInputValue(taskById);
     }, [taskById]);
