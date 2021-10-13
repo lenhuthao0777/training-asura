@@ -151,8 +151,18 @@ function TaskDetailView(props) {
     }, [inputList]);
 
     return (
-        <div className="task-detail">
-            <div className="title-info">Thông tin chi tiết</div>
+        <div
+            className="task-detail container"
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <h1 style={{ textAlign: "center" }}>
+                {disabled ? "Detail Task" : "Edit Task"}
+            </h1>
             {loading ? (
                 <Spin size="small" />
             ) : (
@@ -172,6 +182,7 @@ function TaskDetailView(props) {
                             name="global_state"
                             layout="vertical"
                             onFinish={onSubmit}
+                            style={{ width: "400px" }}
                         >
                             {inputList.map((info) => (
                                 <TaskDetailViewFieldItem

@@ -27,7 +27,7 @@ export default function withFormContainer(WrappedComponent) {
         render() {
             return (
                 <WrappedComponent
-                getTaskById={this.getDataById}
+                    getTaskById={this.getDataById}
                     taskById={this.state.task}
                     updateTaskById={this.updateTaskById}
                     loading={this.state.loading}

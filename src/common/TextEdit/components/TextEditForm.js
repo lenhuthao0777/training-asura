@@ -1,5 +1,4 @@
-import { MinusCircleOutlined } from '@ant-design/icons/lib/icons';
-import { Button, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 
 function TextEditForm(props) {
