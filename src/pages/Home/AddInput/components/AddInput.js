@@ -2,18 +2,15 @@ import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Form, Input, Row, Select, TimePicker } from "antd";
 import { useEffect, useState } from "react";
 import { withAddInput } from "../container/AddInputContainer";
-function AddInput({
-    data,
-    handleConfirmField,
-    handleAddCurrentField,
-    handleRemoveField,
-    handleAction,
-    handleClose,
-    isOpen,
-}) {
+import { v4 as uuid } from "uuid";
+
+function AddInput() {
+    const [disabled, setDisabled] = useState(true);
+    const [inputFields, setInputField] = useState([]);
+    const [actionType, setActionType] = useState();
+    const [isOpen, setIsOpen] = useState();
     const { Option } = Select;
 
-    const [disabled, setDisabled] = useState(true);
     useEffect(() => {
         if (isOpen === true) {
             setDisabled(true);
@@ -21,9 +18,82 @@ function AddInput({
             setDisabled(false);
         }
     }, [isOpen]);
+
+    // Handle remove field
+    const handleRemoveField = (id) => {
+        const values = [...inputFields];
+        const index = values.findIndex((item) => item.key === id);
+        if (index !== -1) {
+            values.splice(index, 1);
+        }
+        setInputField(values);
+    };
+
+    // Handle add field
+    const handleAddNewField = (field) => {
+        const newInputFields = [...inputFields];
+        const newField = {
+            key: `${field.type}${uuid()}`,
+            name: `${field.label}${uuid()}`,
+            label: field.label,
+            type: field.type,
+        };
+        newInputFields.push(newField);
+        setInputField(newInputFields);
+    };
+
+    // Handle add field at head
+    const handleAddFieldHead = (field) => {
+        const newInputFields = [...inputFields];
+        const newField = {
+            key: `${field.type}${uuid()}`,
+            name: `${field.label}${uuid()}`,
+            label: field.label,
+            type: field.type,
+        };
+        newInputFields.unshift(newField);
+        setInputField(newInputFields);
+    };
+
+    // Handle add current field
+    const handleAddCurrentField = (field) => {
+        const newInputField = [...inputFields];
+        const newField = {
+            key: `${field.type}-${uuid()}`,
+            name: `${field.label}-${uuid()}`,
+            label: field.label,
+            type: field.type,
+        };
+        const index = newInputField.findIndex((item) => item.key === field.key);
+        if (index >= 0) {
+            newInputField.splice(index + 1, 0, newField);
+        }
+        setInputField(newInputField);
+    };
+
+    // Handle confirm
+    const handleConfirmField = (value) => {
+        if (actionType === "addField") {
+            handleAddNewField(value);
+        } else if (actionType === "addFieldAtHead") {
+            handleAddFieldHead(value);
+        }
+        setIsOpen(false);
+    };
+
+    // Handle action type
+    const handleAction = (action) => {
+        setIsOpen(true);
+        setActionType(action);
+    };
+    // Handle close
+    const handleClose = () => {
+        setIsOpen(false);
+    };
+    // render field
     const renderField = () => {
         // eslint-disable-next-line array-callback-return
-        return data.map((field) => {
+        return inputFields.map((field) => {
             switch (field.type) {
                 case "text":
                     return (
@@ -84,6 +154,10 @@ function AddInput({
             }
         });
     };
+    // Handle submit form
+    const handleSubmitForm = (value) => {
+        console.log(value);
+    };
 
     return (
         <div
@@ -96,8 +170,12 @@ function AddInput({
             }}
         >
             <h1 style={{ margin: "20px 0" }}>Dynamic Form</h1>
-            {data.length > 0 ? (
-                <Form name="dynamic_form_nest_item" autoComplete="off">
+            {inputFields.length > 0 ? (
+                <Form
+                    name="dynamic_form_nest_item"
+                    autoComplete="off"
+                    onFinish={handleSubmitForm}
+                >
                     {renderField()}
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
@@ -128,7 +206,7 @@ function AddInput({
                             </Select>
                         </Form.Item>
                     </Row>
-                    <Row style={{marginLeft: "82px"}}>
+                    <Row style={{ marginLeft: "82px" }}>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
                                 Confirm
@@ -150,7 +228,7 @@ function AddInput({
                 >
                     Add Field
                 </Button>
-                {data.length > 0 ? (
+                {inputFields.length > 0 ? (
                     <Button
                         disabled={disabled}
                         onClick={() => handleAction("addFieldAtHead")}

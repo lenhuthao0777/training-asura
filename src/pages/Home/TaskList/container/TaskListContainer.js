@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { Component } from "react";
 import API from "services/Client";
 import { v4 as uuid } from "uuid";
@@ -18,11 +17,11 @@ export default function withTaskList(WrappedComponent) {
                 const newTaskData = data.map((item) => ({
                     id: item.id,
                     taskName: item.taskName,
-                    // time: item.time,
-                    time: moment(item.time).format("HH:mm:ss"),
+                    time: item.time,
+                    // time: moment(item.time).format("HH:mm:ss"),
                     name: item.name,
-                    // dateOfBirth: item.dateOfBirth,
-                    dateOfBirth: moment(item.dateOfBirth).format("YYYY-MM-DD"),
+                    dateOfBirth: item.dateOfBirth,
+                    // dateOfBirth: moment(item.dateOfBirth).format("YYYY-MM-DD"),
                     address: item.address,
                     phone: item.phone,
                     email: item.email,
@@ -31,12 +30,8 @@ export default function withTaskList(WrappedComponent) {
                     note: item.note,
                     key: uuid(),
                     idCard: item.idCard,
-                    workStartTime: moment(item.workStartTime).format(
-                        "HH:mm:ss"
-                    ),
-                    workFinishTime: moment(item.workFinishTime).format(
-                        "HH:mm:ss"
-                    ),
+                    workStartTime: item.workStartTime,
+                    workFinishTime: item.workFinishTime,
                 }));
                 this.setState({ taskData: newTaskData });
             }).finally(() => {
