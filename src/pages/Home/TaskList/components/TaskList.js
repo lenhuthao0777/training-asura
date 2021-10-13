@@ -14,7 +14,6 @@ function TaskList({ data, isLoading }) {
             >
                 <Column title="Id" dataIndex="id" key="id" />
                 <Column title="Task Name" dataIndex="taskName" key="taskName" />
-                <Column title="Time" dataIndex="time" key="time" />
                 <Column
                     title="Date Of Birth"
                     dataIndex="dateOfBirth"
