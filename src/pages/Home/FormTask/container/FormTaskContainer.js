@@ -19,6 +19,7 @@ export default function withFormContainer(WrappedComponent) {
         editData(id, data) {
             API.editData(id, data);
         }
+
         render() {
             return (
                 <WrappedComponent

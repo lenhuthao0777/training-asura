@@ -131,12 +131,14 @@ function FormTask({ taskById, getDataById, editData }) {
         console.log(inputValue);
     };
 
+    // Handle change input text
     const onChangeInputText = (e) => {
         const newData = { ...inputValue };
         newData[e.target.name] = e.target.value;
         setInputValue(newData);
         // console.log(data);
     };
+    // Handle change time range picker
     function onChangeRangeTimePicker(date, dateString) {
         setInputValue({
             ...inputValue,
@@ -144,9 +146,12 @@ function FormTask({ taskById, getDataById, editData }) {
             workFinishTime: dateString[1],
         });
     }
+
+    // Handle change date picker
     function onChangeDatePicker(date, dateString) {
         setInputValue({ ...inputValue, dateOfBirth: dateString });
     }
+    // Handle change time picker
     function onChangeTimePicker(time, timeStrings) {
         setInputValue({ ...inputValue, time: timeStrings });
     }
