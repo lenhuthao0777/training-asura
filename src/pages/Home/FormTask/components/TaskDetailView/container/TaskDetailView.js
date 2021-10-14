@@ -3,7 +3,7 @@ import moment from "moment";
 import withFormContainer from "pages/Home/FormTask/container/FormTaskContainer";
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { TYPEFIELDS } from "../../assets/constants";
+import { TYPE_FIELDS } from "../../assets/constants";
 import TaskDetailViewFieldItem from "../components/TaskDetailViewFieldItem";
 
 function TaskDetailView(props) {
@@ -17,84 +17,84 @@ function TaskDetailView(props) {
                 id: 1,
                 label: "Id:",
                 name: "id",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.id || "",
             },
             {
                 id: 2,
                 label: "Task Name:",
                 name: "taskName",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.taskName || "",
             },
             {
                 id: 4,
                 label: "Name:",
                 name: "name",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.name || "",
             },
             {
                 id: 5,
                 label: "Date Of Birth:",
                 name: "dateOfBirth",
-                type: TYPEFIELDS.DATE,
+                type: TYPE_FIELDS.DATE,
                 value: moment(inputValue.dateOfBirth, "DD/MM/YYYY"),
             },
             {
                 id: 6,
                 label: "Address:",
                 name: "address",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.address || "",
             },
             {
                 id: 7,
                 label: "Phone:",
                 name: "phone",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.phone || "",
             },
             {
                 id: 8,
                 label: "Email:",
                 name: "email",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.email || "",
             },
             {
                 id: 9,
                 label: "Current Job:",
                 name: "currentJob",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.currentJob || "",
             },
             {
                 id: 10,
                 label: "Experience:",
                 name: "experience",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.experience || "",
             },
             {
                 id: 11,
                 label: "Note:",
                 name: "note",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.note || "",
             },
             {
                 id: 12,
                 label: "Id Card:",
                 name: "idCard",
-                type: TYPEFIELDS.TEXT,
+                type: TYPE_FIELDS.TEXT,
                 value: inputValue.idCard || "",
             },
             {
                 id: 13,
                 label: "Work Time:",
                 name: ["workStartTime", "workFinishTime"],
-                type: TYPEFIELDS.TIMEFROMTO,
+                type: TYPE_FIELDS.TIME_FROM_TO,
                 value: [
                     moment(inputValue.workStartTime, "HH:mm:ss") || "",
                     moment(inputValue.workFinishTime, "HH:mm:ss") || "",

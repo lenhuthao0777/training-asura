@@ -1,5 +1,5 @@
-export const TYPEFIELDS = {
+export const TYPE_FIELDS = {
   TEXT: 'text',
   DATE: 'date',
-  TIMEFROMTO: 'time from to',
+  TIME_FROM_TO: 'time from to',
 };
