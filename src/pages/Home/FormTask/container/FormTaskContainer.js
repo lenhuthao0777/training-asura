@@ -6,26 +6,31 @@ export default function withFormContainer(WrappedComponent) {
         constructor(props) {
             super(props);
             this.getDataById = this.getDataById.bind(this);
-            this.editData = this.editData.bind(this);
+            this.updateTaskById = this.updateTaskById.bind(this);
             this.state = {
                 task: {},
+                loading: true,
             };
         }
         getDataById = (id) => {
+            this.setState({ loading: true });
             API.getDataById(id, (data) => {
                 this.setState({ task: data });
+            }).finally(() => {
+                this.setState({ loading: false });
             });
         };
-        editData(id, data) {
+        updateTaskById(id, data) {
             API.editData(id, data);
         }
 
         render() {
             return (
                 <WrappedComponent
-                    getDataById={this.getDataById}
+                    getTaskById={this.getDataById}
                     taskById={this.state.task}
-                    editData={this.editData}
+                    updateTaskById={this.updateTaskById}
+                    loading={this.state.loading}
                     {...this.props}
                 />
             );

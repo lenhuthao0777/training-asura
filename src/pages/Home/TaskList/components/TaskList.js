@@ -2,6 +2,7 @@ import { Button, Space, Table } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import withTaskList from "../container/TaskListContainer";
+import Delete from "./DeleteTask";
 
 function TaskList({ data, isLoading }) {
     const { Column } = Table;
@@ -14,7 +15,6 @@ function TaskList({ data, isLoading }) {
             >
                 <Column title="Id" dataIndex="id" key="id" />
                 <Column title="Task Name" dataIndex="taskName" key="taskName" />
-                <Column title="Time" dataIndex="time" key="time" />
                 <Column
                     title="Date Of Birth"
                     dataIndex="dateOfBirth"
@@ -26,15 +26,12 @@ function TaskList({ data, isLoading }) {
                     render={(item) => (
                         <Space size="middle">
                             <Link to={`/form-task/${item.id}`}>
-                                <Button size="large" type="primary">
-                                    Detail
-                                </Button>
+                                <Button type="primary">Detail</Button>
                             </Link>
                             <Link to="dynamic">
-                                <Button size="large" type="primary">
-                                    Dynamic Forms
-                                </Button>
+                                <Button type="primary">Dynamic Forms</Button>
                             </Link>
+                            <Delete id={item.id} />
                         </Space>
                     )}
                 />
