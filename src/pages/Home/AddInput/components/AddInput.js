@@ -1,16 +1,18 @@
-import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Row, Select, TimePicker } from "antd";
-import { useEffect, useState } from "react";
-import { withAddInput } from "../container/AddInputContainer";
-import { v4 as uuid } from "uuid";
+import { Button, Form, Row } from "antd";
+import DayEdit from "common/DayEdit";
+import TextEdit from "common/TextEdit";
+import TimeFromTo from "common/TimeFromTo";
 import { camelCase } from "lodash";
+import NewFieldsInfo from "pages/Home/FormTask/components/NewFieldsInfo";
+import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
+import { withAddInput } from "../container/AddInputContainer";
 function AddInput() {
     const [disabled, setDisabled] = useState(true);
     const [inputFields, setInputField] = useState([]);
     const [actionType, setActionType] = useState();
     const [isOpen, setIsOpen] = useState();
     const [key, setKey] = useState();
-    const { Option } = Select;
 
     useEffect(() => {
         if (isOpen === true) {
@@ -29,7 +31,6 @@ function AddInput() {
         }
         setInputField(values);
     };
-
     // Handle add field
     const handleAddNewField = (field) => {
         const newInputFields = [...inputFields];
@@ -42,19 +43,6 @@ function AddInput() {
         newInputFields.push(newField);
         setInputField(newInputFields);
     };
-    // Handle add field at head
-    const handleAddFieldHead = (field) => {
-        const newInputFields = [...inputFields];
-        const newField = {
-            key: uuid(),
-            name: camelCase(field.label),
-            label: field.label,
-            type: field.type,
-        };
-        newInputFields.unshift(newField);
-        setInputField(newInputFields);
-    };
-
     // Handle add current field
     const handleAddCurrentField = (field) => {
         const newInputField = [...inputFields];
@@ -70,21 +58,16 @@ function AddInput() {
         }
         setInputField(newInputField);
     };
-
     // Handle confirm
     const handleConfirmField = (value) => {
         if (actionType === "addField") {
             handleAddNewField(value);
-        }
-        if (actionType === "addFieldAtHead") {
-            handleAddFieldHead(value);
         }
         if (actionType === "addCurrentField") {
             handleAddCurrentField(value);
         }
         setIsOpen(false);
     };
-
     // Handle action type
     const handleAction = (action) => {
         setIsOpen(true);
@@ -107,15 +90,15 @@ function AddInput() {
                 case "text":
                     return (
                         <Row key={field.key} style={{ flexWrap: "nowrap" }}>
-                            <Form.Item name={field.name} label={field.label}>
-                                <Input placeholder={`Enter ${field.label}`} />
-                            </Form.Item>
+                            <TextEdit name={field.label} label={field.label} />
                             <Button
                                 onClick={() => handleRemoveField(field.key)}
+                                type="dashed"
                             >
-                                <MinusCircleOutlined />
+                                Remove
                             </Button>
                             <Button
+                                type="dashed"
                                 onClick={() =>
                                     handleActionKey(
                                         "addCurrentField",
@@ -123,20 +106,19 @@ function AddInput() {
                                     )
                                 }
                             >
-                                <PlusCircleOutlined />
+                                Add
                             </Button>
                         </Row>
                     );
                 case "date":
                     return (
                         <Row key={field.key} style={{ flexWrap: "nowrap" }}>
-                            <Form.Item name={field.label} label={field.label}>
-                                <DatePicker />
-                            </Form.Item>
+                            <DayEdit name={field.label} label={field.label} />
                             <Button
                                 onClick={() => handleRemoveField(field.key)}
+                                type="dashed"
                             >
-                                <MinusCircleOutlined />
+                                Remove
                             </Button>
                             <Button
                                 onClick={() =>
@@ -145,21 +127,24 @@ function AddInput() {
                                         field.key
                                     )
                                 }
+                                type="dashed"
                             >
-                                <PlusCircleOutlined />
+                                Add
                             </Button>
                         </Row>
                     );
                 case "time":
                     return (
                         <Row key={field.key} style={{ flexWrap: "nowrap" }}>
-                            <Form.Item name={field.label} label={field.label}>
-                                <TimePicker />
-                            </Form.Item>
+                            <TimeFromTo
+                                name={field.label}
+                                label={field.label}
+                            />
                             <Button
                                 onClick={() => handleRemoveField(field.key)}
+                                type="dashed"
                             >
-                                <MinusCircleOutlined />
+                                Remove
                             </Button>
                             <Button
                                 onClick={() =>
@@ -168,8 +153,9 @@ function AddInput() {
                                         field.key
                                     )
                                 }
+                                type="dashed"
                             >
-                                <PlusCircleOutlined />
+                                Add
                             </Button>
                         </Row>
                     );
@@ -182,7 +168,6 @@ function AddInput() {
     const handleSubmitForm = (value) => {
         console.log(value);
     };
-
     return (
         <div
             className="container"
@@ -201,52 +186,21 @@ function AddInput() {
                     onFinish={handleSubmitForm}
                 >
                     {renderField()}
-                    <Form.Item>
+                    {/* <Form.Item>
                         <Button
                             type="primary"
                             htmlType="submit"
-                            disabled={isOpen}
                         >
                             Submit
                         </Button>
-                    </Form.Item>
+                    </Form.Item> */}
                 </Form>
             ) : null}
             {isOpen === true ? (
-                <Form
-                    name="dynamic_form_nest_item"
-                    autoComplete="off"
-                    onFinish={handleConfirmField}
-                >
-                    <Row>
-                        <Form.Item name="label" label="Enter Label">
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            name="type"
-                            label="Type"
-                            style={{ marginLeft: "10px" }}
-                        >
-                            <Select placeholder="Select Type">
-                                <Option value="text">Text</Option>
-                                <Option value="time">Time</Option>
-                                <Option value="date">Date</Option>
-                            </Select>
-                        </Form.Item>
-                    </Row>
-                    <Row style={{ marginLeft: "82px" }}>
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                Confirm
-                            </Button>
-                        </Form.Item>
-                        <Form.Item style={{ marginLeft: "20px" }}>
-                            <Button onClick={handleClose} type="primary">
-                                Cancel
-                            </Button>
-                        </Form.Item>
-                    </Row>
-                </Form>
+                <NewFieldsInfo
+                    handleFinish={handleConfirmField}
+                    onCancel={handleClose}
+                />
             ) : null}
             <Row style={{ margin: " 20px 0" }}>
                 <Button
@@ -256,16 +210,6 @@ function AddInput() {
                 >
                     Add Field
                 </Button>
-                {inputFields.length > 0 ? (
-                    <Button
-                        disabled={disabled}
-                        onClick={() => handleAction("addFieldAtHead")}
-                        style={{ marginLeft: "20px" }}
-                        type="primary"
-                    >
-                        Add Field Head
-                    </Button>
-                ) : null}
             </Row>
         </div>
     );
