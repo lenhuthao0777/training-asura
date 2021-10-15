@@ -3,12 +3,13 @@ import { Button, DatePicker, Form, Input, Row, Select, TimePicker } from "antd";
 import { useEffect, useState } from "react";
 import { withAddInput } from "../container/AddInputContainer";
 import { v4 as uuid } from "uuid";
-
+import { camelCase } from "lodash";
 function AddInput() {
     const [disabled, setDisabled] = useState(true);
     const [inputFields, setInputField] = useState([]);
     const [actionType, setActionType] = useState();
     const [isOpen, setIsOpen] = useState();
+    const [key, setKey] = useState();
     const { Option } = Select;
 
     useEffect(() => {
@@ -33,21 +34,20 @@ function AddInput() {
     const handleAddNewField = (field) => {
         const newInputFields = [...inputFields];
         const newField = {
-            key: `${field.type}${uuid()}`,
-            name: `${field.label}${uuid()}`,
+            key: uuid(),
+            name: camelCase(field.label),
             label: field.label,
             type: field.type,
         };
         newInputFields.push(newField);
         setInputField(newInputFields);
     };
-
     // Handle add field at head
     const handleAddFieldHead = (field) => {
         const newInputFields = [...inputFields];
         const newField = {
-            key: `${field.type}${uuid()}`,
-            name: `${field.label}${uuid()}`,
+            key: uuid(),
+            name: camelCase(field.label),
             label: field.label,
             type: field.type,
         };
@@ -59,12 +59,12 @@ function AddInput() {
     const handleAddCurrentField = (field) => {
         const newInputField = [...inputFields];
         const newField = {
-            key: `${field.type}-${uuid()}`,
-            name: `${field.label}-${uuid()}`,
+            key: uuid(),
+            name: camelCase(field.label),
             label: field.label,
             type: field.type,
         };
-        const index = newInputField.findIndex((item) => item.key === field.key);
+        const index = newInputField.findIndex((item) => item.key === key);
         if (index >= 0) {
             newInputField.splice(index + 1, 0, newField);
         }
@@ -75,8 +75,12 @@ function AddInput() {
     const handleConfirmField = (value) => {
         if (actionType === "addField") {
             handleAddNewField(value);
-        } else if (actionType === "addFieldAtHead") {
+        }
+        if (actionType === "addFieldAtHead") {
             handleAddFieldHead(value);
+        }
+        if (actionType === "addCurrentField") {
+            handleAddCurrentField(value);
         }
         setIsOpen(false);
     };
@@ -85,6 +89,11 @@ function AddInput() {
     const handleAction = (action) => {
         setIsOpen(true);
         setActionType(action);
+    };
+    const handleActionKey = (action, key) => {
+        setActionType(action);
+        setKey(key);
+        setIsOpen(true);
     };
     // Handle close
     const handleClose = () => {
@@ -107,7 +116,12 @@ function AddInput() {
                                 <MinusCircleOutlined />
                             </Button>
                             <Button
-                                onClick={() => handleAddCurrentField(field)}
+                                onClick={() =>
+                                    handleActionKey(
+                                        "addCurrentField",
+                                        field.key
+                                    )
+                                }
                             >
                                 <PlusCircleOutlined />
                             </Button>
@@ -125,7 +139,12 @@ function AddInput() {
                                 <MinusCircleOutlined />
                             </Button>
                             <Button
-                                onClick={() => handleAddCurrentField(field)}
+                                onClick={() =>
+                                    handleActionKey(
+                                        "addCurrentField",
+                                        field.key
+                                    )
+                                }
                             >
                                 <PlusCircleOutlined />
                             </Button>
@@ -143,7 +162,12 @@ function AddInput() {
                                 <MinusCircleOutlined />
                             </Button>
                             <Button
-                                onClick={() => handleAddCurrentField(field)}
+                                onClick={() =>
+                                    handleActionKey(
+                                        "addCurrentField",
+                                        field.key
+                                    )
+                                }
                             >
                                 <PlusCircleOutlined />
                             </Button>
@@ -178,7 +202,11 @@ function AddInput() {
                 >
                     {renderField()}
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={isOpen}
+                        >
                             Submit
                         </Button>
                     </Form.Item>

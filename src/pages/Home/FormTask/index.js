@@ -1,2 +1,2 @@
-import FormTask from "./components/FormTask";
+import FormTask from "./components/TaskDetailView/container/TaskDetailView";
 export default FormTask;

@@ -24,13 +24,25 @@ const API = {
                 console.log(error);
             });
     },
-    getDataById: async (id,callback) => {
+    getDataById: async (id, callback) => {
         await fetch(`${BASE_URL}/${id}`)
             .then((res) => res.json())
             .then(callback)
             .catch((error) => {
                 console.log(error);
             });
+    },
+    deleteDataById: async (id) => {
+        await fetch(`${BASE_URL}/${id}`, {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        }).catch((error) => {
+            console.log(error);
+        });
     },
 };
 
